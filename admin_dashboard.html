@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Shield | Command Dashboard</title>
+<link rel="stylesheet" href="../static/style.css">
+</head>
+
+<body class="command-body">
+
+<div class="network-bg-overlay"></div>
+
+<!-- TOP HEADER -->
+<nav class="top-header">
+
+    <div class="brand">
+        CORE_<span>TERMINAL</span>
+    </div>
+
+    <div class="header-right">
+
+        <!-- BELL -->
+        <div class="bell-wrapper" onclick="toggleAlerts()">
+            <span class="bell-icon">🔔</span>
+
+            <div class="alert-dropdown" id="alertBox">
+                <h6>SECURITY_LOGS</h6>
+                <p class="crit">🚨 BRUTE_FORCE : MUMBAI</p>
+                <p class="warn">⚠️ UNKNOWN_IP : CHENNAI</p>
+            </div>
+        </div>
+
+        <!-- LOGOUT -->
+        <a href="/logout" class="btn-logout">
+            TERMINATE_SESSION
+        </a>
+
+    </div>
+
+</nav>
+
+<!-- MAIN -->
+<div class="main-dashboard-wrapper">
+
+    <!-- LEFT PANEL -->
+    <aside class="analytics-side">
+
+        <div class="side-title">SYSTEM_METRICS</div>
+
+        <div class="metric-group">
+            <label>SUSPICIOUS NODES</label>
+            <div class="data-val text-orange" id="sus-count">14</div>
+            <div class="data-bar">
+                <div class="fill orange-f" style="width:25%"></div>
+            </div>
+        </div>
+
+        <div class="metric-group">
+            <label>BLOCKED IP COUNT</label>
+            <div class="data-val text-red" id="blocked-ips">85</div>
+            <div class="data-bar">
+                <div class="fill red-f" style="width:40%"></div>
+            </div>
+        </div>
+
+        <div class="metric-group">
+            <label>TOTAL LOGIN ATTEMPTS</label>
+            <div class="data-val" id="total-logins">1240</div>
+            <div class="data-bar">
+                <div class="fill blue-f" style="width:70%"></div>
+            </div>
+        </div>
+
+        <div id="notification-area"></div>
+
+        <button onclick="simulateAttack()" class="map-btn"
+        style="margin-top:15px;padding:10px;font-size:12px;">
+        TEST ALERT SYSTEM
+        </button>
+
+    </aside>
+
+    <!-- RIGHT PANEL -->
+    <main class="monitor-area">
+
+        <div class="monitor-glass">
+
+            <div class="scan-effect"></div>
+
+            <div class="monitor-inner"
+            style="display:flex;flex-direction:column;align-items:center; width:100%;">
+
+                <h3>LIVE_THREAT_SCANNER_v4.0</h3>
+
+                <p>Scanning global traffic for signature-based anomalies...</p>
+
+                <!-- LIVE LOG BOX -->
+                <div id="log-box"
+                style="
+                background:rgba(0,0,0,0.6);
+                height:130px;
+                overflow:hidden;
+                font-family:monospace;
+                color:#00ff88;
+                padding:15px;
+                margin:20px auto;
+                border-radius:8px;
+                text-align:left;
+                font-size:12px;
+                width:90%;
+                ">
+
+                    <div>> SYSTEM BOOT COMPLETED...</div>
+                    <div>> SECURE LINK ESTABLISHED...</div>
+
+                </div>
+
+                <!-- MAP BUTTON (FIXED) -->
+                <button class="launch-map-btn" onclick="goToMap()">
+                    INITIALIZE LIVE MAP
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+
+/* ALERT DROPDOWN */
+function toggleAlerts(){
+    var box = document.getElementById("alertBox");
+    box.style.display =
+    (box.style.display === "block") ? "none" : "block";
+}
+
+/* LOG SYSTEM */
+function addLogEntry(message){
+
+    const logBox = document.getElementById("log-box");
+
+    const entry = document.createElement("div");
+
+    entry.innerHTML =
+    "> " + new Date().toLocaleTimeString() + " : " + message;
+
+    logBox.appendChild(entry);
+
+    if(logBox.children.length > 6){
+        logBox.removeChild(logBox.children[0]);
+    }
+}
+
+/* AUTO LOGS */
+setInterval(() => {
+
+    const actions = [
+        "BRUTE_FORCE_PREVENTED",
+        "IP_BLOCKED",
+        "ENCRYPTION_STABLE",
+        "NODE_SCAN_COMPLETE",
+        "LOGIN_DENIED",
+        "THREAT_CAPTURED"
+    ];
+
+    const randomAction =
+    actions[Math.floor(Math.random() * actions.length)];
+
+    addLogEntry(randomAction);
+
+}, 3000);
+
+/* ALERT POPUP */
+function showSecurityAlert(location, ip){
+
+    const area =
+    document.getElementById("notification-area");
+
+    const toast =
+    document.createElement("div");
+
+    toast.style.background = "red";
+    toast.style.color = "white";
+    toast.style.padding = "10px";
+    toast.style.marginTop = "10px";
+    toast.style.borderRadius = "8px";
+
+    toast.innerHTML =
+    "🚨 ATTACK DETECTED<br>" +
+    "LOCATION : " + location + "<br>" +
+    "IP : " + ip;
+
+    area.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 5000);
+}
+
+/* TEST ATTACK */
+function simulateAttack(){
+
+    const places = [
+        "MUMBAI CENTRAL",
+        "CHENNAI NODE",
+        "DELHI GATEWAY",
+        "BANGALORE HUB"
+    ];
+
+    let loc =
+    places[Math.floor(Math.random()*places.length)];
+
+    document.getElementById("blocked-ips").innerText =
+    parseInt(document.getElementById("blocked-ips").innerText) + 1;
+
+    document.getElementById("sus-count").innerText =
+    parseInt(document.getElementById("sus-count").innerText) + 1;
+
+    document.getElementById("total-logins").innerText =
+    parseInt(document.getElementById("total-logins").innerText) + 1;
+
+    showSecurityAlert(loc, "192.168.1.1");
+
+    addLogEntry("ATTACK DETECTED FROM " + loc);
+}
+
+/* 🔥 FIXED MAP NAVIGATION */
+function goToMap(){
+
+    addLogEntry("INITIALIZING LIVE MAP MODULE...");
+
+    setTimeout(() => {
+        window.location.href = "/map";
+    }, 800);
+}
+
+</script>
+
+</body>
+</html>
