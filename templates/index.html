@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberShield Bank</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:#f4f8fc;
+}
+
+/* Navbar */
+nav{
+background:#0a2c5a;
+color:white;
+padding:18px 60px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:28px;
+font-weight:bold;
+}
+
+.logo span{
+color:#4fc3ff;
+}
+
+nav ul{
+list-style:none;
+display:flex;
+gap:30px;
+}
+
+nav ul li a{
+color:white;
+text-decoration:none;
+font-size:15px;
+}
+
+/* Main section */
+.main{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:70px 80px;
+min-height:90vh;
+}
+
+/* Left */
+.left{
+width:52%;
+}
+
+.left h1{
+font-size:52px;
+color:#0a2c5a;
+line-height:1.2;
+margin-bottom:20px;
+}
+
+.left p{
+font-size:18px;
+color:#555;
+margin-bottom:30px;
+line-height:1.7;
+}
+
+.left button{
+padding:14px 28px;
+border:none;
+background:#0a2c5a;
+color:white;
+font-size:15px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.left button:hover{
+background:#123e7a;
+}
+
+/* Login card */
+.right{
+width:38%;
+}
+
+.card{
+background:white;
+padding:40px;
+border-radius:18px;
+box-shadow:0 10px 35px rgba(0,0,0,.08);
+}
+
+.card h2{
+text-align:center;
+color:#0a2c5a;
+margin-bottom:25px;
+}
+
+label{
+display:block;
+margin-top:14px;
+margin-bottom:8px;
+font-size:14px;
+color:#333;
+}
+
+input{
+width:100%;
+padding:14px;
+border:1px solid #ddd;
+border-radius:10px;
+font-size:15px;
+}
+
+input:focus{
+outline:none;
+border:1px solid #0a2c5a;
+}
+
+.login-btn{
+width:100%;
+margin-top:25px;
+padding:14px;
+border:none;
+background:#0a2c5a;
+color:white;
+font-size:15px;
+font-weight:bold;
+border-radius:10px;
+cursor:pointer;
+}
+
+.login-btn:hover{
+background:#123e7a;
+}
+
+.links{
+text-align:center;
+margin-top:16px;
+font-size:14px;
+}
+
+.links a{
+text-decoration:none;
+color:#0a2c5a;
+font-weight:bold;
+}
+
+.footer{
+text-align:center;
+padding:20px;
+color:#666;
+font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+<div class="logo">CyberShield <span>Bank</span></div>
+
+<ul>
+<li><a href="/">Home</a></li>
+<li><a href="#">Services</a></li>
+<li><a href="#">Security</a></li>
+<li><a href="#">Support</a></li>
+</ul>
+</nav>
+
+<div class="main">
+
+<div class="left">
+<h1>Banking With Security & Trust</h1>
+<p>
+Manage your money with next-generation protection, instant access,
+and a secure digital banking experience built for the future.
+</p>
+
+<button onclick="location.href='/register'">Open New Account</button>
+</div>
+
+<div class="right">
+<div class="card">
+
+<form action="/login" method="POST">
+
+<h2>Secure Login</h2>
+
+<label>Username</label>
+<input type="text" name="username" placeholder="Enter Username" required>
+
+<label>Password</label>
+<input type="password" name="password" placeholder="Enter Password" required>
+
+<button type="submit" class="login-btn">Login to Account</button>
+
+<div class="links">
+<a href="#">Forgot Password?</a>
+</div>
+
+<div class="links">
+New User? <a href="/register">Create Account</a>
+</div>
+
+</form>
+
+</div>
+</div>
+
+</div>
+
+<div class="footer">
+© 2026 CyberShield Bank. All Rights Reserved.
+</div>
+
+</body>
+</html>

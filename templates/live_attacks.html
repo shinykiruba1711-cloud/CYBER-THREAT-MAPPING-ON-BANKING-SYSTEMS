@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Live Attack Details</title>
+
+<style>
+body{
+margin:0;
+padding:20px;
+font-family:Segoe UI;
+background:#050b14;
+color:white;
+}
+
+h1{
+text-align:center;
+color:#00eaff;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:#0f172a;
+}
+
+th,td{
+padding:12px;
+text-align:center;
+border-bottom:1px solid #1e293b;
+}
+
+th{
+color:#00eaff;
+background:#001d3d;
+}
+
+button{
+padding:6px 12px;
+background:red;
+color:white;
+border:none;
+cursor:pointer;
+border-radius:5px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>🚨 LIVE ATTACK DETAILS</h1>
+
+<table>
+<thead>
+<tr>
+<th>USER</th>
+<th>LOCATION</th>
+<th>IP</th>
+<th>STATUS</th>
+<th>TIME</th>
+<th>ACTION</th>
+</tr>
+</thead>
+
+<tbody id="tableBody"></tbody>
+</table>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+async function loadAttacks(){
+
+const res = await fetch("/attack_data");
+const data = await res.json();
+
+console.log("DATA:", data);
+
+const table = document.getElementById("tableBody");
+
+table.innerHTML = data.map(item => `
+<tr>
+<td>${item.username}</td>
+<td>${item.location}</td>
+<td>${item.ip}</td>
+<td>${item.status}</td>
+<td>${item.time}</td>
+<td>
+<button onclick="reportUser('${item.username}')">Report</button>
+</td>
+</tr>
+`).join("");
+
+}
+
+loadAttacks();
+setInterval(loadAttacks, 3000);
+
+});
+
+function reportUser(username){
+
+let action = confirm("Block this user?");
+
+if(action){
+
+fetch("/report_user", {
+method: "POST",
+headers: {"Content-Type": "application/json"},
+body: JSON.stringify({
+username: username,
+action: "BLOCK"
+})
+})
+.then(res => res.json())
+.then(data => {
+alert(data.message);
+});
+
+}
+}
+</script>
+</body>
+</html>

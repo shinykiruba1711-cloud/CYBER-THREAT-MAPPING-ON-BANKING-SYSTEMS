@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberShield Live Threat Map</title>
+
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+<style>
+body{
+margin:0;
+padding:0;
+background:#000;
+font-family:Segoe UI,sans-serif;
+}
+
+#map{
+height:100vh;
+width:100%;
+}
+
+.topbar{
+position:absolute;
+top:15px;
+left:20px;
+z-index:999;
+background:rgba(0,0,0,.75);
+padding:14px 20px;
+border-radius:10px;
+color:#00eaff;
+font-weight:bold;
+}
+
+.backbtn{
+position:absolute;
+top:15px;
+right:20px;
+z-index:999;
+background:red;
+padding:10px 16px;
+color:#fff;
+text-decoration:none;
+border-radius:8px;
+font-weight:bold;
+}
+
+.legend{
+position:absolute;
+bottom:20px;
+left:20px;
+z-index:999;
+background:rgba(0,0,0,.8);
+padding:15px;
+border-radius:10px;
+color:#fff;
+font-size:14px;
+line-height:28px;
+}
+
+.red{color:red;}
+.yellow{color:yellow;}
+.green{color:lime;}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">🌍 CYBERSHIELD LIVE MAP</div>
+
+<!-- FIXED: dashboard ok, but NOT default for attack -->
+<a href="/dashboard" class="backbtn">← Dashboard</a>
+
+<div id="map"></div>
+
+<div class="legend">
+<div class="red">🔴 High Attack</div>
+<div class="yellow">🟡 Medium Risk</div>
+<div class="green">🟢 Safe Zone</div>
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+
+var map = L.map('map').setView([22.5,79],5);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+maxZoom:18
+}).addTo(map);
+
+const cities = [
+
+{
+name:"Mumbai",
+coords:[19.0760,72.8777],
+status:"high"
+},
+
+{
+name:"Chennai",
+coords:[13.0827,80.2707],
+status:"high"
+},
+
+{
+name:"Delhi",
+coords:[28.7041,77.1025],
+status:"safe"
+},
+
+{
+name:"Bangalore",
+coords:[12.9716,77.5946],
+status:"medium"
+}
+
+];
+
+function getColor(level){
+if(level=="high") return "red";
+if(level=="medium") return "yellow";
+return "lime";
+}
+
+cities.forEach(function(city){
+
+let color = getColor(city.status);
+
+let marker = L.circleMarker(city.coords,{
+radius:10,
+color:color,
+fillColor:color,
+fillOpacity:1
+}).addTo(map);
+
+marker.bindPopup("<b>"+city.name+"</b><br>Status : "+city.status);
+
+/* ✅ FIXED CLICK LOGIC */
+if(city.status === "high" || city.status === "medium"){
+
+marker.on("click", function(){
+
+// optional: store clicked city
+sessionStorage.setItem("attack_city", city.name);
+
+// 🔥 ALWAYS go live attacks page
+window.location.href="/live_attacks?city=" + city.name;
+
+});
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
